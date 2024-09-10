@@ -1,0 +1,15 @@
+receivers:
+  jaeger:
+    protocols:
+      grpc:
+
+exporters:
+  jaeger:
+    endpoint: "jaeger:14250"
+    insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [jaeger]
+      exporters: [jaeger]

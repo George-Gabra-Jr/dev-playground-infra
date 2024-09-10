@@ -1,0 +1,80 @@
+name: server-setup
+
+services:
+  otel-collector:
+    container_name: otel-collector
+    image: otel/opentelemetry-collector:latest
+    command: ["--config=/etc/otel/config.yaml"]
+    volumes:
+      - ./otel-config.yaml:/etc/otel/config.yaml
+    networks:
+      traefik-net:
+      observability:
+        aliases:
+          - otel-collector
+
+  jaeger:
+    container_name: jaeger
+    image: jaegertracing/all-in-one:latest
+    restart: unless-stopped
+    networks:
+      traefik-net:
+      observability:
+        aliases:
+          - jaeger
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jaeger.rule=Host(`jaeger.dev-playground.net`)"
+      - "traefik.http.routers.jaeger.entrypoints=websecure"
+      - "traefik.http.routers.jaeger.tls=true"
+      - "traefik.http.services.jaeger.loadbalancer.server.port=16686"
+      - "traefik.docker.network=traefik-net"
+      - "traefik.http.middlewares.jaeger-auth.basicauth.users=gabra:$$apr1$$8BYoCqr8$$Tdd4HO1OwcygvfYSNawy4/"
+      - "traefik.http.routers.jaeger.middlewares=jaeger-auth"
+
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    pid: host
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /:/host/root:ro,rslave
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /var/log:/host/var/log:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      traefik-net:
+      observability:
+        aliases:
+          - netdata
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.netdata.rule=Host(`netdata.dev-playground.net`)"
+      - "traefik.http.middlewares.netdata-auth.basicauth.users=gabra:$$apr1$$8BYoCqr8$$Tdd4HO1OwcygvfYSNawy4/"
+      - "traefik.http.routers.netdata.middlewares=netdata-auth"
+      - "traefik.http.services.netdata.loadbalancer.server.port=19999"
+      - "traefik.docker.network=traefik-net"
+
+networks:
+  traefik-net:
+    external: true
+  observability:
+    external: true
+
+volumes:
+  netdataconfig:
+  netdatalib:
+  netdatacache:

@@ -1,4 +1,4 @@
-name: server-setup
+name: observability
 
 services:
   otel-collector:

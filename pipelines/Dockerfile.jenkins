@@ -11,6 +11,6 @@ RUN apt-get update -qq \
         stable" \
     && apt-get update -qq \
     && apt-get -y install docker-ce \
-    && apt-get clean && \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*\
     && usermod -aG docker jenkins

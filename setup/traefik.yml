@@ -45,7 +45,7 @@ tracing:
   addInternals: true
   otlp:
     grpc:
-      endpoint: otel-collector:4317
+      endpoint: lgtm:4317
       insecure: true
   sampleRate: 0.2
   serviceName: traefik

@@ -25,6 +25,7 @@ services:
       - "traefik.docker.network=traefik-net"
     networks:
       - traefik-net
+      - observability
     depends_on:
       - error-pages
 
@@ -48,4 +49,6 @@ services:
 
 networks:
   traefik-net:
+    external: true
+  observability:
     external: true

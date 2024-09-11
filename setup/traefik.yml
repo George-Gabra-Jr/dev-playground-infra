@@ -16,6 +16,7 @@ entryPoints:
           - main: dev-playground.net
             sans:
               - "*.dev-playground.net"
+    asDefault: true
 
 providers:
   docker:

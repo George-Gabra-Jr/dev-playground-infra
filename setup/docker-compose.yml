@@ -41,6 +41,7 @@ services:
       - "traefik.http.routers.error-pages.priority=10"
       - "traefik.http.services.error-pages.loadbalancer.server.port=8080"
       - "traefik.docker.network=traefik-net"
+      - "traefik.http.routers.error-pages.middlewares=error-pages-middleware, rate-limiter-middleware, circuit-breaker-middleware, compression-middleware, retry-middleware, request-size-limiter-middleware"
 
     networks:
       - traefik-net

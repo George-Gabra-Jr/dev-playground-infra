@@ -11,43 +11,16 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./letsencrypt:/letsencrypt
+      - ./traefik.yml:/traefik.yml
     env_file: "dns.env"
     command:
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--providers.docker"
-      - "--providers.swarm=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--ping=true"
-      - "--accesslog=true"
-      - "--api=true"
-      - "--api.dashboard=true"
-      - "--certificatesresolvers.myresolver.acme.email=george.ayad@icloud.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-      - "--certificatesresolvers.myresolver.acme.dnschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=linode"
-      - "--entrypoints.websecure.asDefault=true"
-      - "--entrypoints.websecure.http.tls=true"
-      - "--entrypoints.websecure.http.tls.certResolver=myresolver"
-      - "--entrypoints.websecure.http.tls.domains[0].main=dev-playground.net"
-      - "--entrypoints.websecure.http.tls.domains[0].sans=*.dev-playground.net"
-      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
-      - "--tracing=true"
-      
-      - "--tracing.otlp=true"
-      - "--tracing.otlp.grpc=true"
-      - "--tracing.otlp.grpc.endpoint=otel-collector:4317"
-      - "--tracing.otlp.grpc.insecure=true"
-      - "--tracing.sampleRate=0.2"
-      - "--tracing.serviceName=traefik"
+      - "--configFile=/traefik.yml"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.rule=Host(`traefik.dev-playground.net`)"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=gabra:$$apr1$$8BYoCqr8$$Tdd4HO1OwcygvfYSNawy4/"
-      - "traefik.http.routers.traefik.middlewares=traefik-auth, error-pages-middleware"
+      - "traefik.http.routers.traefik.middlewares=traefik-auth"
       - "traefik.docker.network=traefik-net"
     networks:
       - traefik-net

@@ -16,8 +16,6 @@ entryPoints:
           - main: dev-playground.net
             sans:
               - "*.dev-playground.net"
-      middlewares:
-        error-pages-middleware: {}
     asDefault: true
 
 providers:
@@ -29,6 +27,15 @@ ping: true
 accessLog: true
 api:
   dashboard: true
+
+http:
+  middlewares:
+    error-pages-middleware:
+      errors:
+        status:
+          - "400-599"
+        service: error-pages
+        query: "/{status}.html"
 
 certificatesResolvers:
   myresolver:

@@ -24,13 +24,11 @@ services:
           - jaeger
     labels:
       - "traefik.enable=true"
+      - "traefik.http.middlewares.jaeger-auth.basicauth.users=gabra:$$apr1$$8BYoCqr8$$Tdd4HO1OwcygvfYSNawy4/"
       - "traefik.http.routers.jaeger.rule=Host(`jaeger.dev-playground.net`)"
-      - "traefik.http.routers.jaeger.entrypoints=websecure"
-      - "traefik.http.routers.jaeger.tls=true"
+      - "traefik.http.routers.jaeger.middlewares=jaeger-auth, default-middlewares@file"
       - "traefik.http.services.jaeger.loadbalancer.server.port=16686"
       - "traefik.docker.network=traefik-net"
-      - "traefik.http.middlewares.jaeger-auth.basicauth.users=gabra:$$apr1$$8BYoCqr8$$Tdd4HO1OwcygvfYSNawy4/"
-      - "traefik.http.routers.jaeger.middlewares=jaeger-auth, default-middlewares@file"
 
   netdata:
     image: netdata/netdata
@@ -62,8 +60,8 @@ services:
           - netdata
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.netdata.rule=Host(`netdata.dev-playground.net`)"
       - "traefik.http.middlewares.netdata-auth.basicauth.users=gabra:$$apr1$$8BYoCqr8$$Tdd4HO1OwcygvfYSNawy4/"
+      - "traefik.http.routers.netdata.rule=Host(`netdata.dev-playground.net`)"
       - "traefik.http.routers.netdata.middlewares=netdata-auth, default-middlewares@file"
       - "traefik.http.services.netdata.loadbalancer.server.port=19999"
       - "traefik.docker.network=traefik-net"

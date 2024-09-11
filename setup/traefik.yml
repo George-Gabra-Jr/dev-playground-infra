@@ -7,8 +7,7 @@ entryPoints:
           to: websecure
           scheme: https
           permanent: true
-      middlewares:
-        - default-middlewares@file
+
   websecure:
     address: ":443"
     http:
@@ -18,8 +17,6 @@ entryPoints:
           - main: dev-playground.net
             sans:
               - "*.dev-playground.net"
-      middlewares:
-        - default-middlewares@file
     asDefault: true
 
 providers:

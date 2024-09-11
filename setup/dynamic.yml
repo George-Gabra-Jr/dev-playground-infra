@@ -10,7 +10,7 @@ http:
         burst: 200
     circuit-breaker-middleware:
       circuitBreaker:
-        expression: LatencyAtQuantileMS(50.0)>100
+        expression: LatencyAtQuantileMS(50.0)>1000
     compression-middleware:
       compress:
         excludedContentTypes: text/event-stream
@@ -24,9 +24,9 @@ http:
     default-middlewares:
       chain:
         middlewares:
-          - error-pages-middleware
           - rate-limiter-middleware
-          - circuit-breaker-middleware
-          - compression-middleware
-          - retry-middleware
           - size-limiter-middleware
+          - circuit-breaker-middleware
+          - retry-middleware
+          - error-pages-middleware
+          - compression-middleware

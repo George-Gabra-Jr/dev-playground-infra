@@ -16,7 +16,6 @@ entryPoints:
           - main: dev-playground.net
             sans:
               - "*.dev-playground.net"
-    asDefault: true
 
 providers:
   docker:
@@ -27,43 +26,6 @@ ping: true
 accessLog: true
 api:
   dashboard: true
-
-http:
-  middlewares:
-    error-pages-middleware:
-      errors:
-        status:
-          - "400-599"
-        service: error-pages
-        query: "/{status}.html"
-    rate-limiter-middleware:
-      rateLimit:
-        average: 100
-        burst: 200
-    circuit-breaker-middleware:
-      circuitBreaker:
-        expression: "LatencyAtQuantileMS(50.0) > 100"
-    compression-middleware:
-      compress:
-        excludedContentTypes:
-          - text/event-stream
-    retry-middleware:
-      retry:
-        attempts: 4
-        initialInterval: 100ms
-    request-size-limiter-middleware:
-      buffering:
-        maxRequestBodyBytes: 2000000
-    
-  routers:
-    default:
-      middlewares:
-        - error-pages-middleware
-        - rate-limiter-middleware
-        - circuit-breaker-middleware
-        - compression-middleware
-        - retry-middleware
-        - request-size-limiter-middleware
 
 certificatesResolvers:
   myresolver:

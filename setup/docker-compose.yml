@@ -22,6 +22,24 @@ services:
       - "traefik.http.middlewares.traefik-auth.basicauth.users=gabra:$$apr1$$8BYoCqr8$$Tdd4HO1OwcygvfYSNawy4/"
       - "traefik.http.routers.traefik.middlewares=traefik-auth"
       - "traefik.docker.network=traefik-net"
+
+      - "traefik.http.middlewares.error-pages-middleware.errors.status=400-599"
+      - "traefik.http.middlewares.error-pages-middleware.errors.service=error-pages"
+      - "traefik.http.middlewares.error-pages-middleware.errors.query=/{status}.html"
+
+      - "traefik.http.middlewares.rate-limiter-middleware.rateLimit.average=100"
+      - "traefik.http.middlewares.rate-limiter-middleware.rateLimit.burst=200"
+
+      - "traefik.http.middlewares.circuit-breaker-middleware.circuitBreaker.expression=LatencyAtQuantileMS(50.0)>100"
+
+      - "traefik.http.middlewares.compression-middleware.compress.excludedContentTypes=text/event-stream"
+
+      - "traefik.http.middlewares.retry-middleware.retry.attempts=4"
+      - "traefik.http.middlewares.retry-middleware.retry.initialInterval=100ms"
+
+      - "traefik.http.middlewares.size-limiter-middleware.buffering.maxRequestBodyBytes=2000000"
+      - "traefik.http.routers.default.middlewares=error-pages-middleware, rate-limiter-middleware, circuit-breaker-middleware, compression-middleware, retry-middleware, size-limiter-middleware"
+
     networks:
       - traefik-net
     depends_on:
@@ -41,8 +59,6 @@ services:
       - "traefik.http.routers.error-pages.priority=10"
       - "traefik.http.services.error-pages.loadbalancer.server.port=8080"
       - "traefik.docker.network=traefik-net"
-      - "traefik.http.routers.error-pages.middlewares=error-pages-middleware, rate-limiter-middleware, circuit-breaker-middleware, compression-middleware, retry-middleware, request-size-limiter-middleware"
-
     networks:
       - traefik-net
 

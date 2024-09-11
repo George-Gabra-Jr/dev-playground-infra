@@ -41,9 +41,10 @@ http:
     error-pages-middleware: {}
 
 tracing:
-  enabled: true
+  addInternals: true
   otlp:
-    endpoint: otel-collector:4317
-    insecure: true
+    grpc:
+      endpoint: otel-collector:4317
+      insecure: true
   sampleRate: 0.2
   serviceName: traefik

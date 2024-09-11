@@ -16,6 +16,8 @@ entryPoints:
           - main: dev-playground.net
             sans:
               - "*.dev-playground.net"
+      middlewares:
+        error-pages-middleware: {}
     asDefault: true
 
 providers:
@@ -35,10 +37,6 @@ certificatesResolvers:
       storage: /letsencrypt/acme.json
       dnsChallenge:
         provider: linode
-
-http:
-  middlewares:
-    error-pages-middleware: {}
 
 tracing:
   addInternals: true

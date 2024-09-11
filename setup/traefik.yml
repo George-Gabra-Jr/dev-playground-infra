@@ -54,12 +54,16 @@ http:
     request-size-limiter-middleware:
       buffering:
         maxRequestBodyBytes: 2000000
-
-  services:
-    error-pages:
-      loadBalancer:
-        servers:
-          - url: "http://error-pages:8080"
+    
+  routers:
+    default:
+      middlewares:
+        - error-pages-middleware
+        - rate-limiter-middleware
+        - circuit-breaker-middleware
+        - compression-middleware
+        - retry-middleware
+        - request-size-limiter-middleware
 
 certificatesResolvers:
   myresolver:

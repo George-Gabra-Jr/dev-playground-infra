@@ -12,6 +12,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./letsencrypt:/letsencrypt
       - ./traefik.yml:/traefik.yml
+      - ./dynamic.yml:/dynamic.yml
     env_file: "dns.env"
     command:
       - "--configFile=/traefik.yml"
@@ -20,26 +21,8 @@ services:
       - "traefik.http.routers.traefik.rule=Host(`traefik.dev-playground.net`)"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=gabra:$$apr1$$8BYoCqr8$$Tdd4HO1OwcygvfYSNawy4/"
-      - "traefik.http.routers.traefik.middlewares=traefik-auth"
+      - "traefik.http.routers.traefik.middlewares=traefik-auth, default-middlewares"
       - "traefik.docker.network=traefik-net"
-
-      - "traefik.http.middlewares.error-pages-middleware.errors.status=400-599"
-      - "traefik.http.middlewares.error-pages-middleware.errors.service=error-pages"
-      - "traefik.http.middlewares.error-pages-middleware.errors.query=/{status}.html"
-
-      - "traefik.http.middlewares.rate-limiter-middleware.rateLimit.average=100"
-      - "traefik.http.middlewares.rate-limiter-middleware.rateLimit.burst=200"
-
-      - "traefik.http.middlewares.circuit-breaker-middleware.circuitBreaker.expression=LatencyAtQuantileMS(50.0)>100"
-
-      - "traefik.http.middlewares.compression-middleware.compress.excludedContentTypes=text/event-stream"
-
-      - "traefik.http.middlewares.retry-middleware.retry.attempts=4"
-      - "traefik.http.middlewares.retry-middleware.retry.initialInterval=100ms"
-
-      - "traefik.http.middlewares.size-limiter-middleware.buffering.maxRequestBodyBytes=2000000"
-      - "traefik.http.routers.default.middlewares=error-pages-middleware, rate-limiter-middleware, circuit-breaker-middleware, compression-middleware, retry-middleware, size-limiter-middleware"
-
     networks:
       - traefik-net
     depends_on:

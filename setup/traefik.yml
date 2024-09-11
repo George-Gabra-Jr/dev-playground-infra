@@ -22,9 +22,13 @@ providers:
   docker:
     exposedByDefault: false
   swarm: true
+  file:
+    filename: /dynamic.yml
+    watch: true
 
 ping: true
 accessLog: true
+log: true
 api:
   dashboard: true
 

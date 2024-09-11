@@ -42,12 +42,12 @@ certificatesResolvers:
         provider: linode
 
 metrics:
+  addInternals: true
+  addEntryPointsLabels: true
+  addRoutersLabels: true
+  addServicesLabels: true
+  pushInterval: 10s
   otlp:
-    addEntryPointsLabels: true
-    addRoutersLabels: true
-    addServicesLabels: true
-    addInternals: true
-    pushInterval: 10s
     grpc:
       endpoint: lgtm:4317
       insecure: true

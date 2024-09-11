@@ -46,6 +46,7 @@ metrics:
     addEntryPointsLabels: true
     addRoutersLabels: true
     addServicesLabels: true
+    addInternals: true
     pushInterval: 10s
     grpc:
       endpoint: lgtm:4317

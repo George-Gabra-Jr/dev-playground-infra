@@ -20,7 +20,7 @@ services:
       - "traefik.http.routers.traefik.rule=Host(`traefik.dev-playground.net`)"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=gabra:$$apr1$$8BYoCqr8$$Tdd4HO1OwcygvfYSNawy4/"
-      - "traefik.http.routers.traefik.middlewares=traefik-auth,@middlewares"
+      - "traefik.http.routers.traefik.middlewares=traefik-auth"
       - "traefik.docker.network=traefik-net"
 
       - "traefik.http.middlewares.error-pages-middleware.errors.status=400-599"

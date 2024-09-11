@@ -21,7 +21,7 @@ services:
       - "traefik.http.routers.traefik.rule=Host(`traefik.dev-playground.net`)"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=gabra:$$apr1$$8BYoCqr8$$Tdd4HO1OwcygvfYSNawy4/"
-      - "traefik.http.routers.traefik.middlewares=traefik-auth, default-middlewares"
+      - "traefik.http.routers.traefik.middlewares=traefik-auth, default-middlewares@file"
       - "traefik.docker.network=traefik-net"
     networks:
       - traefik-net

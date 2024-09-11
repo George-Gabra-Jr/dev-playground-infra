@@ -41,11 +41,21 @@ certificatesResolvers:
       dnsChallenge:
         provider: linode
 
+metrics:
+  otlp:
+    addEntryPointsLabels: true
+    addRoutersLabels: true
+    addServicesLabels: true
+    pushInterval: 10s
+    grpc:
+      endpoint: lgtm:4317
+      insecure: true
+
 tracing:
+  serviceName: traefik
   addInternals: true
+  sampleRate: 0.2
   otlp:
     grpc:
       endpoint: lgtm:4317
       insecure: true
-  sampleRate: 0.2
-  serviceName: traefik

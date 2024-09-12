@@ -8,21 +8,21 @@ http:
         query: /{status}.html
     rate-limiter-middleware:
       rateLimit:
-        average: 100
-        burst: 200
+        average: 1000
+        burst: 2000
     circuit-breaker-middleware:
       circuitBreaker:
-        expression: LatencyAtQuantileMS(50.0)>1000
+        expression: LatencyAtQuantileMS(50.0)>10000
     compression-middleware:
       compress:
         excludedContentTypes: text/event-stream
     retry-middleware:
       retry:
-        attempts: 4
+        attempts: 1
         initialInterval: 100ms
     size-limiter-middleware:
       buffering:
-        maxRequestBodyBytes: 2000000
+        maxRequestBodyBytes: 20000000
     default-middlewares:
       chain:
         middlewares:

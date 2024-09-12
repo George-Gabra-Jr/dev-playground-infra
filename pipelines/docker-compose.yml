@@ -9,6 +9,7 @@ services:
       - 127.0.0.1:5000:5000
     volumes:
       - registry_data:/data
+      - registry_registry:/var/lib/registry
     networks:
       cicd:
         aliases:
@@ -22,8 +23,9 @@ services:
     ports:
       - 127.0.0.1:2376:2376
     volumes:
-      - dind-certs:/certs/client
-      - dind-data:/var/dind_home
+      - dind_certs:/certs/client
+      - dind_data:/var/dind_home
+      - dind_docker:/var/lib/docker
     environment:
       DOCKER_TLS_CERTDIR: /certs
     command: ["--storage-driver", "overlay2"]
@@ -41,9 +43,9 @@ services:
     privileged: true
     restart: unless-stopped
     volumes:
-      - /jenkins:/var/jenkins_home
-      - dind-data:/var/dind_home
-      - dind-certs:/certs/client:ro
+      - jenkins_home:/var/jenkins_home
+      - dind_data:/var/dind_home
+      - dind_certs:/certs/client:ro
     environment:
       DOCKER_HOST: tcp://docker:2376
       DOCKER_CERT_PATH: /certs/client
@@ -133,8 +135,10 @@ networks:
 
 volumes:
   registry_data:
-  dind-certs:
-  dind-data:
+  registry_registry:
+  dind_certs:
+  dind_data:
+  dind_docker:
   jenkins:
   portainer_data:
   sonarqube_bundled_plugins:

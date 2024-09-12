@@ -1,10 +1,13 @@
 name: observability
 
 services:
-  lgtm:
-    container_name: lgtm
+  grafana-lgtm:
+    container_name: grafana-lgtm
     image: grafana/otel-lgtm:latest
     restart: unless-stopped
+    # volumes:
+      # - grafana-data:/
+      # - otel-logs:/
     networks:
       traefik-net:
       observability:
@@ -12,9 +15,9 @@ services:
           - lgtm
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.lgtm.rule=Host(`lgtm.dev-playground.net`)"
-      - "traefik.http.routers.lgtm.middlewares=default-middlewares@file"
-      - "traefik.http.services.lgtm.loadbalancer.server.port=3000"
+      - "traefik.http.routers.grafana-lgtm.rule=Host(`grafana.dev-playground.net`)"
+      - "traefik.http.routers.grafana-lgtm.middlewares=default-middlewares@file"
+      - "traefik.http.services.grafana-lgtm.loadbalancer.server.port=3000"
       - "traefik.docker.network=traefik-net"
 
   netdata:
@@ -63,3 +66,5 @@ volumes:
   netdataconfig:
   netdatalib:
   netdatacache:
+  otel-logs:
+  grafana-data:

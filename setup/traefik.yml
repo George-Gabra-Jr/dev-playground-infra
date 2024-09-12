@@ -29,7 +29,10 @@ providers:
 
 ping: true
 accessLog: true
-log: true
+log:
+  level: DEBUG
+  format: json
+  filePath: /var/log/traefik.log
 api:
   dashboard: true
 

@@ -28,11 +28,16 @@ providers:
     watch: true
 
 ping: true
-accessLog: true
+
+accessLog:
+  format: json
+  filePath: /var/log/access.log
+
 log:
   level: DEBUG
   format: json
   filePath: /var/log/traefik.log
+
 api:
   dashboard: true
 

@@ -8,6 +8,8 @@ services:
     # volumes:
       # - grafana-data:/
       # - otel-logs:/
+    environment:
+      - OTEL_LOG_LEVEL=debug
     networks:
       traefik-net:
       observability:

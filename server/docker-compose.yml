@@ -1,10 +1,22 @@
-name: setup
+# name: setup
 
 services:
   traefik:
     container_name: traefik
     image: traefik:v3.1
     restart: unless-stopped
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement: 
+        constraints: 
+          - node.role != manager
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: '50M'
+      restart_policy:
+        condition: any
     ports:
       - 80:80
       - 443:443
@@ -35,6 +47,18 @@ services:
     container_name: error-pages
     image: ghcr.io/tarampampam/error-pages:3
     restart: unless-stopped
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement: 
+        constraints: 
+          - node.role != manager
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: '50M'
+      restart_policy:
+        condition: any
     environment:
       TEMPLATE_NAME: hacker-terminal
     command:

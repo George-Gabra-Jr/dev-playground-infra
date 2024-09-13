@@ -1,10 +1,22 @@
-name: observability
+# name: observability
 
 services:
   grafana-lgtm:
     container_name: grafana-lgtm
     image: grafana/otel-lgtm:latest
     restart: unless-stopped
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement: 
+        constraints: 
+          - node.role != manager
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: '50M'
+      restart_policy:
+        condition: any
     volumes:
       - prometheus_data:/data/prometheus
       - loki_data:/loki
@@ -29,6 +41,18 @@ services:
     container_name: netdata
     pid: host
     restart: unless-stopped
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement: 
+        constraints: 
+          - node.role != manager
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: '50M'
+      restart_policy:
+        condition: any
     cap_add:
       - SYS_PTRACE
       - SYS_ADMIN

@@ -70,7 +70,7 @@ volumes:
   netdataconfig:
   netdatalib:
   netdatacache:
-  grafana-data:
+  grafana_data:
   prometheus_data:
   loki_data:
   tempo_data:

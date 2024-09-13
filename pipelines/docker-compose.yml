@@ -5,18 +5,18 @@ services:
     container_name: registry
     image: registry:2
     restart: unless-stopped
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement: 
-        constraints: 
-          - node.role == manager
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: '50M'
-      restart_policy:
-        condition: any
+    # deploy:
+    #   mode: replicated
+    #   replicas: 1
+    #   placement: 
+    #     constraints: 
+    #       - node.role == manager
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: '50M'
+    #   restart_policy:
+    #     condition: any
     ports:
       - 127.0.0.1:5000:5000
     volumes:
@@ -32,18 +32,18 @@ services:
     image: docker:dind
     privileged: true
     restart: unless-stopped
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement: 
-        constraints: 
-          - node.role == manager
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: '50M'
-      restart_policy:
-        condition: any
+    # deploy:
+    #   mode: replicated
+    #   replicas: 1
+    #   placement: 
+    #     constraints: 
+    #       - node.role == manager
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: '50M'
+    #   restart_policy:
+    #     condition: any
     volumes:
       - dind_certs:/certs/client
       - dind_data:/var/dind_home
@@ -65,18 +65,18 @@ services:
     user: root
     privileged: true
     restart: unless-stopped
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement: 
-        constraints: 
-          - node.role == manager
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: '50M'
-      restart_policy:
-        condition: any
+    # deploy:
+    #   mode: replicated
+    #   replicas: 1
+    #   placement: 
+    #     constraints: 
+    #       - node.role == manager
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: '50M'
+    #   restart_policy:
+    #     condition: any
     volumes:
       - jenkins_home:/var/jenkins_home
       - dind_data:/var/dind_home
@@ -102,18 +102,18 @@ services:
     container_name: portainer
     image: portainer/portainer-ce:latest
     restart: unless-stopped
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement: 
-        constraints: 
-          - node.role == manager
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: '50M'
-      restart_policy:
-        condition: any
+    # deploy:
+    #   mode: replicated
+    #   replicas: 1
+    #   placement: 
+    #     constraints: 
+    #       - node.role == manager
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: '50M'
+    #   restart_policy:
+    #     condition: any
     volumes:
       - portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
@@ -135,18 +135,18 @@ services:
     container_name: sonarqube
     image: sonarqube:community
     restart: unless-stopped
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement: 
-        constraints: 
-          - node.role == manager
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: '50M'
-      restart_policy:
-        condition: any
+    # deploy:
+    #   mode: replicated
+    #   replicas: 1
+    #   placement: 
+    #     constraints: 
+    #       - node.role == manager
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: '50M'
+    #   restart_policy:
+    #     condition: any
     volumes:
       - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
@@ -175,18 +175,18 @@ services:
     container_name: sonarqube-db
     image: postgres:15
     restart: unless-stopped
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement: 
-        constraints: 
-          - node.role == manager
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: '50M'
-      restart_policy:
-        condition: any
+    # deploy:
+    #   mode: replicated
+    #   replicas: 1
+    #   placement: 
+    #     constraints: 
+    #       - node.role == manager
+    #   resources:
+    #     limits:
+    #       cpus: "0.1"
+    #       memory: '50M'
+    #   restart_policy:
+    #     condition: any
     volumes:
       - sonarqube_db:/var/lib/postgresql
       - sonar_postgresql_data:/var/lib/postgresql/data

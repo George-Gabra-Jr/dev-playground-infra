@@ -25,8 +25,6 @@ services:
       - ./letsencrypt:/letsencrypt
       - ./traefik.yml:/traefik.yml
       - ./dynamic.yml:/dynamic.yml
-      - ./traefik.log:/var/log/traefik.log
-      - ./access.log:/var/log/access.log
     env_file: "dns.env"
     command:
       - "--configFile=/traefik.yml"

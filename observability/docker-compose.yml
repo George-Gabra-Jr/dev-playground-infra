@@ -1,4 +1,4 @@
-# name: observability
+name: observability
 
 services:
   grafana-lgtm:

@@ -5,11 +5,13 @@ services:
     container_name: grafana-lgtm
     image: grafana/otel-lgtm:latest
     restart: unless-stopped
-    # volumes:
-      # - grafana-data:/
-      # - otel-logs:/
+    volumes:
+      - prometheus_data:/data/prometheus
+      - loki_data:/loki
+      - tempo_data:/tmp/tempo
+      - grafana_data:/otel-lgtm/grafana/data
     environment:
-      - OTEL_LOG_LEVEL=debug
+      - ENABLE_LOGS_ALL=true
     networks:
       traefik-net:
       observability:
@@ -68,5 +70,7 @@ volumes:
   netdataconfig:
   netdatalib:
   netdatacache:
-  otel-logs:
   grafana-data:
+  prometheus_data:
+  loki_data:
+  tempo_data:

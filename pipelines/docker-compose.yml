@@ -50,6 +50,7 @@ services:
       - dind_certs:/certs/client
       - dind_data:/var/dind_home
       - dind_docker:/var/lib/docker
+      - ./daemon.json:/etc/docker/daemon.json
     environment:
       DOCKER_TLS_CERTDIR: /certs
     command: ["--storage-driver", "overlay2"]

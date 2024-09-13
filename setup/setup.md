@@ -194,18 +194,7 @@ docker network create --driver overlay --attachable app
 
 ### NOW, START THE COMPOSE FILES BEFORE CONTINUING
 
-### Allow Dind to Push to Local Registry
-
-```bash
-docker exec --interactive --tty docker-dind sh
-mkdir /etc/docker
-touch /etc/docker/daemon.json
-echo '{"insecure-registries" : ["http://registry:5000"]}' > /etc/docker/daemon.json
-exit
-## Restart Dind for this to take effect.
-```
-
-### Allow Docker to Push to Local Registry
+### Allow Docker to pull from to Local Registry
 
 ```bash
 sudo mkdir /etc/docker

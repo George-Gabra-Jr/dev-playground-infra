@@ -53,6 +53,8 @@ services:
     #       memory: '50M'
     #   restart_policy:
     #     condition: any
+    environment:
+      - NETDATA_DISABLE_CLOUD=true
     cap_add:
       - SYS_PTRACE
       - SYS_ADMIN

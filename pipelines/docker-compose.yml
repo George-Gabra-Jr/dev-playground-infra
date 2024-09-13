@@ -44,8 +44,6 @@ services:
           memory: '50M'
       restart_policy:
         condition: any
-    ports:
-      - 127.0.0.1:2376:2376
     volumes:
       - dind_certs:/certs/client
       - dind_data:/var/dind_home

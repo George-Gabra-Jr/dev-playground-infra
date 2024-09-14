@@ -1,1 +1,7 @@
-{"insecure-registries" : ["http://registry:5000"]}
+{
+    "insecure-registries" : ["http://registry:5000"],
+    "iptables": false,
+    "ip-forward": false,
+    "ipv6": false,
+    "userns-remap": null
+}

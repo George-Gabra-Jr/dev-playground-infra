@@ -105,6 +105,8 @@ services:
           - portainer
 
     labels:
+      - "sablier.enable=true"
+      - "sablier.group=server"
       - "traefik.enable=true"
       - "traefik.http.routers.portainer.rule=Host(`portainer.dev-playground.net`)"
       - "traefik.http.routers.portainer.middlewares=default-middlewares@file"

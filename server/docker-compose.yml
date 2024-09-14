@@ -73,8 +73,6 @@ services:
       - "serve"
     labels:
       - "traefik.enable=true"
-      - "sablier.enable=true"
-      - "sablier.group=server"
       - "traefik.http.routers.error-pages.rule=Host(`errors.dev-playground.net`)"
       - "traefik.http.routers.error-pages.priority=10"
       - "traefik.http.routers.error-pages.middlewares=default-middlewares@file"

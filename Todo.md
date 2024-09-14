@@ -12,10 +12,11 @@
     - Investigate Docker secrets as a way to securely store and manage sensitive information, such as API keys, passwords, and certificates, used by the project.
     - Learn how to create and manage Docker secrets, and update the project's Docker Compose or Docker Swarm configuration to use secrets instead of hardcoding sensitive data.
 
-4. Consider turning services into swarm mode for orchestration
-    - Evaluate the benefits of using Docker Swarm mode for orchestration and management of the project's services.
-    - Explore the possibility to utilize swarm features like service scaling, rolling updates, and load balancing.
+4. Solve DIND as a service problem for Jenkins
+    - Address the issue of running Docker in Docker (DIND) as a service for Jenkins.
+    - Research and implement a solution to enable Jenkins to use Docker containers for building and testing applications.
 
-5. Evaluate services for replication and scalability
-    - Analyze the project's services to identify which ones can benefit from replication for improved scalability and high availability.
-    - Consider factors such as service dependencies, resource utilization, and expected traffic patterns to determine which services should be replicated.
+5. Explore external service for centralized network storage
+    - Investigate external services that provide centralized network storage for volumes.
+    - Evaluate options for separating persistence from containers and the host machine by utilizing an external storage solution.
+

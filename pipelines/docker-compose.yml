@@ -24,10 +24,10 @@ services:
 
   docker-dind:
     container_name: docker-dind
-    image: docker:dind-rootless
+    image: docker:dind
     restart: unless-stopped
     cap_add:
-      - all
+      - ALL
     deploy:
       mode: replicated
       replicas: 1

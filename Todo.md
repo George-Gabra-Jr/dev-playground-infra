@@ -1,8 +1,9 @@
 # Todo List
 
-1. Convert `setup.md` into a script
-    - This will involve rewriting the existing setup instructions in `setup.md` as a script, such as a Bash or Python script, to automate the setup process.
-    - The script should include all the necessary commands and configurations required to set up the project environment.
+1. Convert `setup.md` into a CLI tool
+    - This will involve rewriting the existing setup instructions in `setup.md` as a command-line interface (CLI) tool, which can be executed from the terminal.
+    - The CLI tool should have both headless and interactive modes, allowing users to choose between automated setup or manual configuration.
+    - In headless mode, a configuration file should be required to provide the necessary parameters for the setup process.
 
 2. Implement Terraform setup for automation
     - Use Terraform to define and provision the required infrastructure resources, such as virtual machines, networks, and storage, needed for the project.
@@ -23,3 +24,10 @@
 6. Explore Loki logging driver for docker and send logs to the LGTM stack
     - Research the Loki logging driver for Docker and its integration with the LGTM stack.
     - Learn how to configure and use the Loki logging driver to send container logs to the LGTM stack for centralized log management and analysis.
+
+7. Create the infrastructure and application layers of the application, including the following components:
+    - Message broker: Utilize NATS as the messaging system for reliable and scalable communication between services.
+    - Caching layer: Implement Redis as an open-source alternative for caching data and improving application performance.
+    - Database: Choose between PostgreSQL (pg) or Neon as the database technology for storing and retrieving application data.
+    - Blob storage interface: Consider leveraging the centralized network storage solution mentioned earlier to handle blob storage requirements.
+    - Identity federation: Integrate Keycloak as the identity federation solution to manage authentication and authorization across the application.

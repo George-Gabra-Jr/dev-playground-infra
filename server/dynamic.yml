@@ -23,6 +23,17 @@ http:
     size-limiter-middleware:
       buffering:
         maxRequestBodyBytes: 20000000
+    autoscaler:
+      plugin:
+        sablier:
+          group: default
+          dynamic:
+            displayName: dev-playground.net
+            refreshFrequency: 5s
+            showDetails: "true"
+            theme: hacker-terminal
+          sablierUrl: http://sablier:10000
+          sessionDuration: 1m
     default-middlewares:
       chain:
         middlewares:

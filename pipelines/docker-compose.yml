@@ -106,10 +106,10 @@ services:
 
     labels:
       - "sablier.enable=true"
-      - "sablier.group=server"
+      - "sablier.group=default"
       - "traefik.enable=true"
       - "traefik.http.routers.portainer.rule=Host(`portainer.dev-playground.net`)"
-      - "traefik.http.routers.portainer.middlewares=default-middlewares@file"
+      - "traefik.http.routers.portainer.middlewares=default-middlewares@file, autoscaler@file"
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
       - "traefik.docker.network=traefik-net"
 

@@ -40,10 +40,6 @@ services:
         condition: any
     volumes:
       - jenkins_home:/var/jenkins_home
-    cap_add:
-      - SYS_ADMIN
-    devices:
-      - /dev/fuse:/dev/fuse
     networks:
       cicd:
         aliases:

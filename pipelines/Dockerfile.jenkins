@@ -4,15 +4,24 @@ USER root
 
 # Install dependencies
 RUN apt-get update -qq \
-    && apt-get install -qqy ca-certificates curl gnupg2 \
+    && apt-get install -qqy \
+        ca-certificates \
+        curl \
+        fuse-overlayfs \
+        gnupg2 \
+        slirp4netns \
+        uidmap \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+ENV BUILDKIT_VERSION=v0.16.0
+
 # Install BuildKit
-ADD https://github.com/moby/buildkit/releases/download/v0.16.0/buildkitd-linux-amd64 /usr/local/bin/buildkitd
-RUN chmod +x /usr/local/bin/buildkitd
-ADD https://github.com/moby/buildkit/releases/download/v0.16.0/buildctl-linux-amd64 /usr/local/bin/buildctl
-RUN chmod +x /usr/local/bin/buildctl
+ADD "https://github.com/moby/buildkit/releases/download/${BUILDKIT_VERSION}/buildkit-${BUILDKIT_VERSION}.linux-amd64.tar.gz" /usr/local
+
+# Copy BuildKit configuration file
+COPY buildkitd.toml /home/jenkins/.config/buildkit/buildkitd.toml
+RUN chown jenkins:jenkins /home/jenkins/.config/buildkit/buildkitd.toml
 
 # Create BuildKit rootless directory
 RUN mkdir -p /home/jenkins/.local/share/buildkit \

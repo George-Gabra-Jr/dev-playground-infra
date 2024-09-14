@@ -1,0 +1,4 @@
+[worker.oci]
+  enabled = true
+  rootless = true
+  snapshotter = "fuse-overlayfs"

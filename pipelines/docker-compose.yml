@@ -30,6 +30,8 @@ services:
       dockerfile: Dockerfile.jenkins
     user: root
     restart: unless-stopped
+    cap_add:
+      - SYS_ADMIN
     deploy:
       mode: replicated
       replicas: 1

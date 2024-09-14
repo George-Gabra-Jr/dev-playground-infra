@@ -181,4 +181,4 @@ volumes:
   jenkins_home:
   portainer_data:
   sonarqube_data:
-  sonarqube_logs:
+  sonarqube_db:

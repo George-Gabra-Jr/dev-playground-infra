@@ -27,7 +27,9 @@
 
 7. Create the infrastructure and application layers of the application, including the following components:
     - Message broker: Utilize NATS as the messaging system for reliable and scalable communication between services.
-    - Caching layer: Implement Redis as an open-source alternative for caching data and improving application performance.
+    - Caching layer: Implement Redis or an open-source alternative for caching data and improving application performance.
     - Database: Choose between PostgreSQL (pg) or Neon as the database technology for storing and retrieving application data.
-    - Blob storage interface: Consider leveraging the centralized network storage solution mentioned earlier to handle blob storage requirements.
+    - Storage interface: Consider leveraging the centralized network storage solution mentioned earlier to handle storage requirements.
     - Identity federation: Integrate Keycloak as the identity federation solution to manage authentication and authorization across the application.
+
+    - Check istio for service discovery and service mesh

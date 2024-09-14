@@ -2,28 +2,15 @@ FROM jenkins/jenkins:lts
 
 USER root
 
-# Install dependencies
 RUN apt-get update -qq \
-    && apt-get install -qqy \
-        ca-certificates \
-        curl \
-        fuse-overlayfs \
-        gnupg2 \
-        slirp4netns \
-        uidmap \
+    && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-common \
+    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
+    && add-apt-repository \
+        "deb [arch=amd64] https://download.docker.com/linux/debian \
+        $(lsb_release -cs) \
+        stable" \
+    && apt-get update -qq \
+    && apt-get -y install docker-ce-cli \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-ENV BUILDKIT_VERSION=v0.16.0
-
-# Install BuildKit
-RUN curl -L --output /tmp/buildkit.tgz "https://github.com/moby/buildkit/releases/download/${BUILDKIT_VERSION}/buildkit-${BUILDKIT_VERSION}.linux-amd64.tar.gz" \
-    && tar -C /usr/local -xzvf /tmp/buildkit.tgz \
-    && rm /tmp/buildkit.tgz
-
-# Copy entrypoint script
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# Set the entrypoint
-ENTRYPOINT ["/entrypoint.sh"]
+    && rm -rf /var/lib/apt/lists/*\
+    && usermod -aG docker jenkins

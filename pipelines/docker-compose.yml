@@ -24,7 +24,7 @@ services:
 
   docker-dind:
     container_name: docker-dind
-    image: docker:dind-rootless⁠
+    image: docker:dind-rootless
     restart: unless-stopped
     deploy:
       mode: replicated

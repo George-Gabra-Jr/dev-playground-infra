@@ -207,5 +207,5 @@ sudo echo '{"insecure-registries" : ["http://localhost:5000"]}' > /etc/docker/da
 
 ```bash
 cd pipelines
-docker build -t jenkinswithdocker:latest --file Dockerfile.jenkins .
+docker build -t jenkinswithdockercli:latest --file Dockerfile.jenkins .
 ```

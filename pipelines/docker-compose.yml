@@ -1,27 +1,22 @@
-name: pipelines
+# name: pipelines
 
 services:
   registry:
     container_name: registry
     image: registry:2
     restart: unless-stopped
-    # deploy:
-    #   mode: replicated
-    #   replicas: 1
-    #   placement: 
-    #     constraints: 
-    #       - node.role == manager
-    #   resources:
-    #     limits:
-    #       cpus: "0.1"
-    #       memory: '50M'
-    #   restart_policy:
-    #     condition: any
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement: 
+        constraints: 
+          - node.role == manager
+      restart_policy:
+        condition: any
     ports:
       - 127.0.0.1:5000:5000
     volumes:
-      - registry_data:/data
-      - registry_registry:/var/lib/registry
+      - registry_data:/var/lib/registry
     networks:
       cicd:
         aliases:
@@ -32,22 +27,17 @@ services:
     image: docker:dind
     privileged: true
     restart: unless-stopped
-    # deploy:
-    #   mode: replicated
-    #   replicas: 1
-    #   placement: 
-    #     constraints: 
-    #       - node.role == manager
-    #   resources:
-    #     limits:
-    #       cpus: "0.1"
-    #       memory: '50M'
-    #   restart_policy:
-    #     condition: any
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement: 
+        constraints: 
+          - node.role == manager
+      restart_policy:
+        condition: any
     volumes:
       - dind_certs:/certs/client
-      - dind_data:/var/dind_home
-      - dind_docker:/var/lib/docker
+      - dind_data:/var/lib/docker
       - ./daemon.json:/etc/docker/daemon.json
     environment:
       DOCKER_TLS_CERTDIR: /certs
@@ -59,24 +49,21 @@ services:
 
   jenkins:
     container_name: jenkins
+    image: jenkinswithdocker:latest
     build:
       context: .
       dockerfile: Dockerfile.jenkins
     user: root
     privileged: true
     restart: unless-stopped
-    # deploy:
-    #   mode: replicated
-    #   replicas: 1
-    #   placement: 
-    #     constraints: 
-    #       - node.role == manager
-    #   resources:
-    #     limits:
-    #       cpus: "0.1"
-    #       memory: '50M'
-    #   restart_policy:
-    #     condition: any
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement: 
+        constraints: 
+          - node.role == manager
+      restart_policy:
+        condition: any
     volumes:
       - jenkins_home:/var/jenkins_home
       - dind_data:/var/dind_home
@@ -102,18 +89,14 @@ services:
     container_name: portainer
     image: portainer/portainer-ce:latest
     restart: unless-stopped
-    # deploy:
-    #   mode: replicated
-    #   replicas: 1
-    #   placement: 
-    #     constraints: 
-    #       - node.role == manager
-    #   resources:
-    #     limits:
-    #       cpus: "0.1"
-    #       memory: '50M'
-    #   restart_policy:
-    #     condition: any
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement: 
+        constraints: 
+          - node.role == manager
+      restart_policy:
+        condition: any
     volumes:
       - portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
@@ -135,24 +118,16 @@ services:
     container_name: sonarqube
     image: sonarqube:community
     restart: unless-stopped
-    # deploy:
-    #   mode: replicated
-    #   replicas: 1
-    #   placement: 
-    #     constraints: 
-    #       - node.role == manager
-    #   resources:
-    #     limits:
-    #       cpus: "0.1"
-    #       memory: '50M'
-    #   restart_policy:
-    #     condition: any
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement: 
+        constraints: 
+          - node.role == manager
+      restart_policy:
+        condition: any
     volumes:
-      - sonarqube_conf:/opt/sonarqube/conf
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
-      - sonarqube_logs:/opt/sonarqube/logs
-      - sonarqube_bundled_plugins:/opt/sonarqube/lib/bundled-plugins
+      - sonarqube_data:/opt/sonarqube/
     environment:
       SONAR_JDBC_URL: jdbc:postgresql://sonarqube-db:5432/sonar
       SONAR_JDBC_USERNAME: sonar
@@ -175,21 +150,16 @@ services:
     container_name: sonarqube-db
     image: postgres:15
     restart: unless-stopped
-    # deploy:
-    #   mode: replicated
-    #   replicas: 1
-    #   placement: 
-    #     constraints: 
-    #       - node.role == manager
-    #   resources:
-    #     limits:
-    #       cpus: "0.1"
-    #       memory: '50M'
-    #   restart_policy:
-    #     condition: any
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement: 
+        constraints: 
+          - node.role == manager
+      restart_policy:
+        condition: any
     volumes:
       - sonarqube_db:/var/lib/postgresql
-      - sonar_postgresql_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: sonar
       POSTGRES_PASSWORD: sonar
@@ -206,16 +176,9 @@ networks:
 
 volumes:
   registry_data:
-  registry_registry:
   dind_certs:
   dind_data:
-  dind_docker:
   jenkins_home:
   portainer_data:
-  sonarqube_bundled_plugins:
-  sonarqube_conf:
   sonarqube_data:
-  sonarqube_db:
-  sonarqube_extensions:
   sonarqube_logs:
-  sonar_postgresql_data:

@@ -202,3 +202,10 @@ sudo touch /etc/docker/daemon.json
 sudo echo '{"insecure-registries" : ["http://localhost:5000"]}' > /etc/docker/daemon.json
 ## Restart Docker for this to take effect.
 ```
+
+### Build Jenkins with Docker
+
+```bash
+cd pipelines
+docker build -t jenkinswithdocker:latest --file Dockerfile.jenkins .
+```

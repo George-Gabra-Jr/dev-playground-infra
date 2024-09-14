@@ -17,7 +17,9 @@ RUN apt-get update -qq \
 ENV BUILDKIT_VERSION=v0.16.0
 
 # Install BuildKit
-ADD "https://github.com/moby/buildkit/releases/download/${BUILDKIT_VERSION}/buildkit-${BUILDKIT_VERSION}.linux-amd64.tar.gz" /usr/local
+RUN curl -L --output /tmp/buildkit.tgz "https://github.com/moby/buildkit/releases/download/${BUILDKIT_VERSION}/buildkit-${BUILDKIT_VERSION}.linux-amd64.tar.gz" \
+    && tar -C /usr/local -xzvf /tmp/buildkit.tgz \
+    && rm /tmp/buildkit.tgz
 
 # Copy BuildKit configuration file
 COPY buildkitd.toml /home/jenkins/.config/buildkit/buildkitd.toml

@@ -159,7 +159,7 @@ services:
       restart_policy:
         condition: any
     volumes:
-      - sonarqube_db:/var/lib/postgresql
+      - sonarqube_db:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: sonar
       POSTGRES_PASSWORD: sonar

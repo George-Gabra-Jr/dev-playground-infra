@@ -24,8 +24,7 @@ services:
 
   docker-dind:
     container_name: docker-dind
-    image: docker:dind
-    privileged: true
+    image: docker:dind-rootless⁠
     restart: unless-stopped
     deploy:
       mode: replicated
@@ -54,7 +53,6 @@ services:
       context: .
       dockerfile: Dockerfile.jenkins
     user: root
-    privileged: true
     restart: unless-stopped
     deploy:
       mode: replicated

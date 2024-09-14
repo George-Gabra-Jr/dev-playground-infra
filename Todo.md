@@ -20,3 +20,6 @@
     - Investigate external services that provide centralized network storage for volumes.
     - Evaluate options for separating persistence from containers and the host machine by utilizing an external storage solution.
 
+6. Explore Loki logging driver and send logs to the LGTM stack
+    - Research the Loki logging driver for Docker and its integration with the LGTM stack.
+    - Learn how to configure and use the Loki logging driver to send container logs to the LGTM stack for centralized log management and analysis.

@@ -2,14 +2,27 @@ FROM jenkins/jenkins:lts
 
 USER root
 
+# Install dependencies
 RUN apt-get update -qq \
-    && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-common \
-    && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
-    && add-apt-repository \
-        "deb [arch=amd64] https://download.docker.com/linux/debian \
-        $(lsb_release -cs) \
-        stable" \
-    && apt-get update -qq \
-    && apt-get -y install docker-ce-cli \
+    && apt-get install -qqy ca-certificates curl gnupg2 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install BuildKit
+ADD https://github.com/moby/buildkit/releases/download/v0.11.6/buildkitd-linux-amd64 /usr/local/bin/buildkitd
+RUN chmod +x /usr/local/bin/buildkitd
+ADD https://github.com/moby/buildkit/releases/download/v0.11.6/buildctl-linux-amd64 /usr/local/bin/buildctl
+RUN chmod +x /usr/local/bin/buildctl
+
+# Create BuildKit rootless directory
+RUN mkdir -p /home/jenkins/.local/share/buildkit \
+    && chown -R jenkins:jenkins /home/jenkins/.local
+
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+USER jenkins
+
+# Set the entrypoint
+ENTRYPOINT ["/entrypoint.sh"]

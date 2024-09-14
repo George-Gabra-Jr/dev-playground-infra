@@ -9,9 +9,9 @@ RUN apt-get update -qq \
     && rm -rf /var/lib/apt/lists/*
 
 # Install BuildKit
-ADD https://github.com/moby/buildkit/releases/download/v0.11.6/buildkitd-linux-amd64 /usr/local/bin/buildkitd
+ADD https://github.com/moby/buildkit/releases/download/v0.16.0/buildkitd-linux-amd64 /usr/local/bin/buildkitd
 RUN chmod +x /usr/local/bin/buildkitd
-ADD https://github.com/moby/buildkit/releases/download/v0.11.6/buildctl-linux-amd64 /usr/local/bin/buildctl
+ADD https://github.com/moby/buildkit/releases/download/v0.16.0/buildctl-linux-amd64 /usr/local/bin/buildctl
 RUN chmod +x /usr/local/bin/buildctl
 
 # Create BuildKit rootless directory

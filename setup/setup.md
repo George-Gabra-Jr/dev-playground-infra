@@ -186,10 +186,11 @@ curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/i
 ## Setup Networks
 
 ```bash
-docker network create --driver overlay --attachable traefik-net
+docker network create --driver overlay --attachable ingress
 docker network create --driver overlay --attachable cicd
 docker network create --driver overlay --attachable observability
 docker network create --driver overlay --attachable app
+docker network create --driver overlay --attachable storage
 ```
 
 ### NOW, START THE COMPOSE FILES BEFORE CONTINUING

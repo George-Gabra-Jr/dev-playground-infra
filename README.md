@@ -201,6 +201,8 @@ The platform is built upon the following principles:
   - [ ] Storage Interface: Leverage Longhorn for handling storage requirements.
   - [ ] Identity Federation: Integrate Keycloak to manage authentication and authorization.
 
+- [ ] Add Souin HTTP cache middleware to Traefik
+
 ## Contributing
 
 To contribute to the project, follow these steps:

@@ -21,7 +21,7 @@ services:
     environment:
       - ENABLE_LOGS_ALL=true
     networks:
-      traefik-net:
+      ingress:
       observability:
         aliases:
           - lgtm
@@ -66,7 +66,7 @@ services:
       - /var/log:/host/var/log:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
-      traefik-net:
+      ingress:
       observability:
         aliases:
           - netdata
@@ -76,10 +76,10 @@ services:
       - "traefik.http.routers.netdata.rule=Host(`netdata.dev-playground.net`)"
       - "traefik.http.routers.netdata.middlewares=netdata-auth, default-middlewares@file"
       - "traefik.http.services.netdata.loadbalancer.server.port=19999"
-      - "traefik.docker.network=traefik-net"
+      - "traefik.docker.network=ingress"
 
 networks:
-  traefik-net:
+  ingress:
     external: true
   observability:
     external: true

@@ -2,16 +2,13 @@
 
 services:
   grafana-lgtm:
-    container_name: grafana-lgtm
     image: grafana/otel-lgtm:latest
-    restart: unless-stopped
     deploy:
       mode: replicated
       replicas: 1
       placement: 
         constraints: 
           - node.role == manager
-        max_replicas_per_node: 1
       restart_policy:
         condition: any
     volumes:
@@ -35,16 +32,13 @@ services:
 
   netdata:
     image: netdata/netdata
-    container_name: netdata
     pid: host
-    restart: unless-stopped
     deploy:
       mode: replicated
       replicas: 1
       placement: 
         constraints: 
           - node.role == manager
-        max_replicas_per_node: 1
       restart_policy:
         condition: any
     environment:

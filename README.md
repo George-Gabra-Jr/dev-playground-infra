@@ -45,7 +45,7 @@ The architecture comprises several layers, each responsible for specific functio
 - **Storage Layer**: Longhorn, CSI
 - **Observability Layer**: Grafana, Loki, Mimir, Tempo, Netdata
 - **Pipelines Layer**: Jenkins, SonarQube, Portainer, Docker Registry
-- **Infrastructure Layer**: Docker, Docker Swarm
+- **Infrastructure Layer**: Ubuntu, Docker, Docker Swarm
 
 ## Key Principles
 
@@ -149,6 +149,7 @@ The platform is built upon the following principles:
 
 **Tools**:
 
+- **Ubuntu**: The setup script for the host OS is detailed in `setup/setup.md`.
 - **Docker**: Containerization platform.
 - **Docker Swarm**: Native clustering and orchestration for Docker containers.
   - Handles container orchestration and resource management.
@@ -161,14 +162,16 @@ The platform is built upon the following principles:
   - Eliminates the need for hardcoding IP addresses.
   - Facilitates flexibility and ease of scaling.
 
-- **NATS for Service Layer**:
+- **NATS for Core Layer**:
   - Enables asynchronous, event-driven communication.
   - Services discover each other dynamically through events.
 
 ## To-Do List
 
-- [ ] Convert `setup.md` into a CLI tool
-  - [ ] Rewrite the existing setup instructions as a command-line interface (CLI) tool executable from the terminal.
+- [ ] Convert `setup.md` into a script
+  - [ ] Rewrite the existing setup instructions as a bash script runnable from the terminal.
+
+- [ ] Write a CLI tool to configure the server running parts or all of the stack and reconfiguring it accordingly.
   - [ ] Implement both headless and interactive modes for automated or manual configuration.
   - [ ] In headless mode, require a configuration file to provide necessary setup parameters.
 
@@ -195,6 +198,7 @@ The platform is built upon the following principles:
   - [ ] Configure and use the Loki logging driver to send container logs to the stack for centralized log management.
 
 - [ ] Create the infrastructure and application layers of the application, including the following components:
+  - [ ] API Gateway: Explore resgate as an API gateway enabling async multicast connection.
   - [ ] Message Broker: Utilize NATS as the messaging system for reliable, scalable communication.
   - [ ] Caching Layer: Implement KeyDB or an open-source alternative for caching data.
   - [ ] Database: Use PostgreSQL for storing and retrieving application data.

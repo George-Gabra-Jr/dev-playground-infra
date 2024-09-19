@@ -29,9 +29,9 @@ services:
       - "traefik.http.routers.traefik.rule=Host(`traefik.dev-playground.net`)"
       - "traefik.http.routers.traefik.middlewares=traefik-auth, default-middlewares@file"
       - "traefik.http.routers.traefik.service=api@internal"
-      - "traefik.docker.network=ingress"
+      - "traefik.docker.network=ingress-net"
     networks:
-      - ingress
+      - ingress-net
       - observability
     depends_on:
       - error-pages
@@ -56,12 +56,12 @@ services:
       - "traefik.http.routers.error-pages.rule=Host(`errors.dev-playground.net`)"
       - "traefik.http.routers.error-pages.middlewares=default-middlewares@file"
       - "traefik.http.services.error-pages.loadbalancer.server.port=8080"
-      - "traefik.docker.network=ingress"
+      - "traefik.docker.network=ingress-net"
     networks:
-      - ingress
+      - ingress-net
 
 networks:
-  ingress:
+  ingress-net:
     external: true
   observability:
     external: true

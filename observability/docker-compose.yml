@@ -21,7 +21,7 @@ services:
     environment:
       - ENABLE_LOGS_ALL=true
     networks:
-      ingress:
+      ingress-net:
       observability:
         aliases:
           - lgtm
@@ -30,7 +30,7 @@ services:
       - "traefik.http.routers.grafana-lgtm.rule=Host(`grafana.dev-playground.net`)"
       - "traefik.http.routers.grafana-lgtm.middlewares=default-middlewares@file"
       - "traefik.http.services.grafana-lgtm.loadbalancer.server.port=3000"
-      - "traefik.docker.network=ingress"
+      - "traefik.docker.network=ingress-net"
 
   netdata:
     image: netdata/netdata
@@ -66,7 +66,7 @@ services:
       - /var/log:/host/var/log:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
-      ingress:
+      ingress-net:
       observability:
         aliases:
           - netdata
@@ -76,10 +76,10 @@ services:
       - "traefik.http.routers.netdata.rule=Host(`netdata.dev-playground.net`)"
       - "traefik.http.routers.netdata.middlewares=netdata-auth, default-middlewares@file"
       - "traefik.http.services.netdata.loadbalancer.server.port=19999"
-      - "traefik.docker.network=ingress"
+      - "traefik.docker.network=ingress-net"
 
 networks:
-  ingress:
+  ingress-net:
     external: true
   observability:
     external: true

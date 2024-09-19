@@ -44,13 +44,13 @@ services:
       cicd:
         aliases:
           - jenkins
-      ingress:
+      ingress-net:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.jenkins.rule=Host(`jenkins.dev-playground.net`)"
       - "traefik.http.routers.jenkins.middlewares=default-middlewares@file"
       - "traefik.http.services.jenkins.loadbalancer.server.port=8080"
-      - "traefik.docker.network=ingress"
+      - "traefik.docker.network=ingress-net"
 
 
   portainer:
@@ -69,7 +69,7 @@ services:
       - portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      ingress:
+      ingress-net:
       cicd:
         aliases:
           - portainer
@@ -79,7 +79,7 @@ services:
       - "traefik.http.routers.portainer.rule=Host(`portainer.dev-playground.net`)"
       - "traefik.http.routers.portainer.middlewares=default-middlewares@file"
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
-      - "traefik.docker.network=ingress"
+      - "traefik.docker.network=ingress-net"
 
 
   sonarqube:
@@ -101,7 +101,7 @@ services:
       SONAR_JDBC_USERNAME: sonar
       SONAR_JDBC_PASSWORD: sonar
     networks:
-      ingress:
+      ingress-net:
       cicd:
         aliases:
           - sonarqube
@@ -110,7 +110,7 @@ services:
       - "traefik.http.routers.sonarqube.rule=Host(`sonarqube.dev-playground.net`)"
       - "traefik.http.routers.sonarqube.middlewares=default-middlewares@file"
       - "traefik.http.services.sonarqube.loadbalancer.server.port=9000"
-      - "traefik.docker.network=ingress"
+      - "traefik.docker.network=ingress-net"
     depends_on:
       - sonarqube-db
 
@@ -139,7 +139,7 @@ services:
 networks:
   cicd:
     external: true
-  ingress:
+  ingress-net:
     external: true
 
 volumes:

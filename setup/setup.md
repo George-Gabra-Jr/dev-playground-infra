@@ -187,11 +187,25 @@ curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/i
 
 ```bash
 docker network create --driver overlay --attachable ingress-net
-docker network create --driver overlay --attachable cicd
-docker network create --driver overlay --attachable observability
+docker network create --driver overlay --attachable gateway
 docker network create --driver overlay --attachable app
-docker network create --driver overlay --attachable storage
+docker network create --driver overlay --attachable data
+docker network create --driver overlay --attachable identity
+docker network create --driver overlay --attachable messaging
+docker network create --driver overlay --attachable observability
+docker network create --driver overlay --attachable pipelines
 ```
+
+## Setup Storage
+
+```bash
+docker volume create --name registry_data --opt type=none --opt device=/mnt/storage/registry_data --opt o=bind
+docker volume create --name jenkins_home --opt type=none --opt device=/mnt/storage/jenkins_home --opt o=bind
+docker volume create --name portainer_data --opt type=none --opt device=/mnt/storage/portainer_data --opt o=bind
+docker volume create --name sonarqube_data --opt type=none --opt device=/mnt/storage/sonarqube_data --opt o=bind
+docker volume create --name sonarqube_db --opt type=none --opt device=/mnt/storage/sonarqube_db --opt o=bind
+```
+
 
 ### NOW, START THE COMPOSE FILES BEFORE CONTINUING
 

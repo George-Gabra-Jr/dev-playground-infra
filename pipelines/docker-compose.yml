@@ -16,7 +16,7 @@ services:
     volumes:
       - registry_data:/var/lib/registry
     networks:
-      cicd:
+      pipelines:
         aliases:
           - registry
 
@@ -34,7 +34,7 @@ services:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      cicd:
+      pipelines:
         aliases:
           - jenkins
       ingress-net:
@@ -61,7 +61,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       ingress-net:
-      cicd:
+      pipelines:
         aliases:
           - portainer
 
@@ -88,7 +88,7 @@ services:
       POSTGRES_USER: sonar
       POSTGRES_PASSWORD: sonar
     networks:
-      cicd:
+      pipelines:
         aliases:
           - sonarqube-db
 
@@ -110,7 +110,7 @@ services:
       SONAR_JDBC_PASSWORD: sonar
     networks:
       ingress-net:
-      cicd:
+      pipelines:
         aliases:
           - sonarqube
     labels:
@@ -123,7 +123,7 @@ services:
       - sonarqube-db
 
 networks:
-  cicd:
+  pipelines:
     external: true
   ingress-net:
     external: true

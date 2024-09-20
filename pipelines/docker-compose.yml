@@ -130,7 +130,27 @@ networks:
 
 volumes:
   registry_data:
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/storage/registry_data
   jenkins_home:
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/storage/jenkins_home
   portainer_data:
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/storage/portainer_data
   sonarqube_data:
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/storage/sonarqube_data
   sonarqube_db:
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/storage/sonarqube_db

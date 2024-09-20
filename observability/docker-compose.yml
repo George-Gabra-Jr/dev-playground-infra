@@ -82,9 +82,16 @@ networks:
 
 volumes:
   netdataconfig:
+    external: true
   netdatalib:
+    external: true
   netdatacache:
+    external: true
   grafana_data:
+    external: true
   prometheus_data:
+    external: true
   loki_data:
+    external: true
   tempo_data:
+    external: true

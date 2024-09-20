@@ -198,16 +198,69 @@ docker network create --driver overlay --attachable pipelines
 
 ## Setup Storage
 
+### Setup network storage (EXPERIMENATAL)
+
 ```bash
+sudo apt install s3fs
+
+sudo mkdir -p /mnt/storage
+
+echo ACCESS_KEY_ID:SECRET_ACCESS_KEY > /etc/passwd-s3fs
+chmod 600 etc/passwd-s3fs
+
+s3fs mybucket /mnt/storage -o passwd_file=/etc/passwd-s3fs -o url=https://url.to.s3/ -o allow_other
+
+# add this to fstab
+# mybucket /mnt/storage fuse.s3fs _netdev,allow_other,use_path_request_style,url=https://url.to.s3/ 0 0
+```
+
+### Identity
+
+```bash
+sudo mkdir -p /mnt/storage/keycloak_db
+docker volume create --name keycloak_db --opt type=none --opt device=/mnt/storage/keycloak_db --opt o=bind
+```
+
+### Data
+
+```bash
+sudo mkdir -p /mnt/storage/data_db
+docker volume create --name data_db --opt type=none --opt device=/mnt/storage/data_db --opt o=bind
+```
+
+### Observability
+
+```bash
+sudo mkdir -p /mnt/storage/netdataconfig
+sudo mkdir -p /mnt/storage/netdatalib
+sudo mkdir -p /mnt/storage/netdatacache
+sudo mkdir -p /mnt/storage/grafana_data
+sudo mkdir -p /mnt/storage/prometheus_data
+sudo mkdir -p /mnt/storage/loki_data
+sudo mkdir -p /mnt/storage/prometheus_data
+docker volume create --name netdataconfig --opt type=none --opt device=/mnt/storage/netdataconfig --opt o=bind
+docker volume create --name netdatalib --opt type=none --opt device=/mnt/storage/netdatalib --opt o=bind
+docker volume create --name netdatacache --opt type=none --opt device=/mnt/storage/netdatacache --opt o=bind
+docker volume create --name grafana_data --opt type=none --opt device=/mnt/storage/grafana_data --opt o=bind
+docker volume create --name prometheus_data --opt type=none --opt device=/mnt/storage/prometheus_data --opt o=bind
+docker volume create --name loki_data --opt type=none --opt device=/mnt/storage/loki_data --opt o=bind
+docker volume create --name tempo_data --opt type=none --opt device=/mnt/storage/tempo_data --opt o=bind
+```
+
+### Pipelines
+
+```bash
+sudo mkdir -p /mnt/storage/registry_data
+sudo mkdir -p /mnt/storage/jenkins_home
+sudo mkdir -p /mnt/storage/portainer_data
+sudo mkdir -p /mnt/storage/sonarqube_data
+sudo mkdir -p /mnt/storage/sonarqube_db
 docker volume create --name registry_data --opt type=none --opt device=/mnt/storage/registry_data --opt o=bind
 docker volume create --name jenkins_home --opt type=none --opt device=/mnt/storage/jenkins_home --opt o=bind
 docker volume create --name portainer_data --opt type=none --opt device=/mnt/storage/portainer_data --opt o=bind
 docker volume create --name sonarqube_data --opt type=none --opt device=/mnt/storage/sonarqube_data --opt o=bind
 docker volume create --name sonarqube_db --opt type=none --opt device=/mnt/storage/sonarqube_db --opt o=bind
 ```
-
-
-### NOW, START THE COMPOSE FILES BEFORE CONTINUING
 
 ### Allow Docker to pull from to Local Registry
 

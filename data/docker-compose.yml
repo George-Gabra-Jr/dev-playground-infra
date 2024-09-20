@@ -12,14 +12,14 @@ services:
       restart_policy:
         condition: any
     volumes:
-      - app_db:/var/lib/postgresql/data
+      - data_db:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: app
     networks:
-      app:
+      data:
         aliases:
-          - app-pgdb
+          - pgdb
 
   keydb:
     image: eqalpha/keydb:alpine
@@ -32,10 +32,14 @@ services:
       restart_policy:
         condition: any
     networks:
-      app:
+      data:
         aliases:
-          - app-keydb
+          - keydb
 
 networks:
-  app:
+  data:
+    external: true
+
+volumes:
+  data_db:
     external: true

@@ -200,8 +200,8 @@ The platform is built upon the following principles:
 - [ ] Create the infrastructure and application layers of the application, including the following components:
   - [ ] API Gateway: Explore resgate as an API gateway enabling async multicast connection.
   - [ ] Message Broker: Utilize NATS as the messaging system for reliable, scalable communication.
-  - [ ] Caching Layer: Implement KeyDB or an open-source alternative for caching data.
-  - [ ] Database: Use PostgreSQL for storing and retrieving application data.
+  - [x] Caching Layer: Implement KeyDB or an open-source alternative for caching data.
+  - [x] Database: Use PostgreSQL for storing and retrieving application data.
   - [ ] Storage Interface: Leverage Longhorn for handling storage requirements.
   - [ ] Identity Federation: Integrate Keycloak to manage authentication and authorization.
 

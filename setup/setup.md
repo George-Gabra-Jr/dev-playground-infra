@@ -185,6 +185,8 @@ curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/i
 
 ## Setup Networks
 
+### Setup per layer overay network
+
 ```bash
 docker network create --driver overlay --attachable ingress-net
 docker network create --driver overlay --attachable gateway
@@ -196,9 +198,9 @@ docker network create --driver overlay --attachable observability
 docker network create --driver overlay --attachable pipelines
 ```
 
-## Setup Storage
+## Setup Storage [EXPERIMENTAL]
 
-### Setup network storage (EXPERIMENATAL)
+### Setup network storage
 
 ```bash
 sudo apt install s3fs
@@ -214,21 +216,21 @@ s3fs mybucket /mnt/storage -o passwd_file=/etc/passwd-s3fs -o url=https://url.to
 # mybucket /mnt/storage fuse.s3fs _netdev,allow_other,use_path_request_style,url=https://url.to.s3/ 0 0
 ```
 
-### Identity
+### Identity Volumes
 
 ```bash
 sudo mkdir -p /mnt/storage/keycloak_db
 docker volume create --name keycloak_db --opt type=none --opt device=/mnt/storage/keycloak_db --opt o=bind
 ```
 
-### Data
+### Data Volumes
 
 ```bash
 sudo mkdir -p /mnt/storage/data_db
 docker volume create --name data_db --opt type=none --opt device=/mnt/storage/data_db --opt o=bind
 ```
 
-### Observability
+### Observability Volumes
 
 ```bash
 sudo mkdir -p /mnt/storage/netdataconfig
@@ -237,7 +239,7 @@ sudo mkdir -p /mnt/storage/netdatacache
 sudo mkdir -p /mnt/storage/grafana_data
 sudo mkdir -p /mnt/storage/prometheus_data
 sudo mkdir -p /mnt/storage/loki_data
-sudo mkdir -p /mnt/storage/prometheus_data
+sudo mkdir -p /mnt/storage/tempo_data
 docker volume create --name netdataconfig --opt type=none --opt device=/mnt/storage/netdataconfig --opt o=bind
 docker volume create --name netdatalib --opt type=none --opt device=/mnt/storage/netdatalib --opt o=bind
 docker volume create --name netdatacache --opt type=none --opt device=/mnt/storage/netdatacache --opt o=bind
@@ -247,7 +249,7 @@ docker volume create --name loki_data --opt type=none --opt device=/mnt/storage/
 docker volume create --name tempo_data --opt type=none --opt device=/mnt/storage/tempo_data --opt o=bind
 ```
 
-### Pipelines
+### Pipelines Volumes
 
 ```bash
 sudo mkdir -p /mnt/storage/registry_data
@@ -261,6 +263,8 @@ docker volume create --name portainer_data --opt type=none --opt device=/mnt/sto
 docker volume create --name sonarqube_data --opt type=none --opt device=/mnt/storage/sonarqube_data --opt o=bind
 docker volume create --name sonarqube_db --opt type=none --opt device=/mnt/storage/sonarqube_db --opt o=bind
 ```
+
+## Pipeline Specific Setup Instructions
 
 ### Allow Docker to pull from to Local Registry
 
